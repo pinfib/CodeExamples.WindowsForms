@@ -66,6 +66,8 @@ namespace Calculator.View
             InitializeComponent();
 
             buttonDecimalSeparator.Text = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator; // разделитель выбирается в зависимости от региональных стандартов
+
+            buttonResult.Click += (sender, e) => textBoxData.Focus();
         }
 
         internal void StartView()
@@ -77,7 +79,11 @@ namespace Calculator.View
         {
             foreach (var e in list)
             {
-                control.Controls.Add(new CalculatorButton(e, eventHandler));
+                var button = new CalculatorButton(e, eventHandler);
+
+                button.Click += (sender, el) => textBoxData.Focus();
+
+                control.Controls.Add(button);
             }
         }
 

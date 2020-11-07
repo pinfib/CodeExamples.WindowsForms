@@ -19,7 +19,7 @@ namespace Calculator.View
             Size = new System.Drawing.Size(196, 30);
 
             Click += DeleteResultOperation; // если в текст-боксе результат выражения, его нужно сначала стереть
-            KeyPress += InputFilter;
+            KeyPress += KeyInputFilter;
 
             _numberDecimalSeparator = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator); // разделитель зависит от региональных стандартов
 
@@ -35,8 +35,13 @@ namespace Calculator.View
             }
         }
 
-        private void InputFilter(object sender, KeyPressEventArgs e)
+        private void KeyInputFilter(object sender, KeyPressEventArgs e)
         {
+            if (DataIsResult)
+            {
+                DeleteResultOperation(sender, e);
+            }
+
             var number = e.KeyChar;
 
             if (number == _numberDecimalSeparator && Text.Contains(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator))
